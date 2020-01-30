@@ -1,4 +1,4 @@
-# GOES 16 image analysis for biomass burning detection
+# GOES-16 image analysis for biomass burning detection
 
 This is the source code used for image processing and analysis of NOAA's meteorological satellite GOES-16, used during my undergrad project at the University of Campinas/SP.
 
