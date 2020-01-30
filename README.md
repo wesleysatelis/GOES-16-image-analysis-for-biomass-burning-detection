@@ -7,4 +7,5 @@ This is the source code used for image processing and analysis of NOAA's meteoro
 </p>
 
 The main main goal is to characterise and quantify areas where pre-harvesting burning of sugarcane is still in use. 
+
 This project was fundend by the Brazilian National Council for Scientific and Technological Development.
