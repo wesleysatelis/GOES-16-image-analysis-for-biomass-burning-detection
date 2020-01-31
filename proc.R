@@ -1,10 +1,18 @@
 library(raster)
 library(viridis)
 library(rgdal)
-library(geobr)
+library(geobr) # git
 library(tmap)
 library(sf)
 library(tidyverse)
+packages <- list("raster", "viridis", "rgdal", "tmap", "sf", "tidyvere")
+a <- require(hass)
+for(i in packages){
+  if (i == T){
+    install.packages(i, )
+  }
+}
+
 
 # setwd("/home/wesley/Desktop/IC/Processamento de imagens/")
 # plant <- st_read("ok247/000_SP_Usinas.shp") %>% 
@@ -158,9 +166,3 @@ valsTempo_plt %>%
   theme(axis.text.x = element_text(angle = 90)) +
   scale_x_datetime(breaks = date_breaks("1 day")) +
   scale_y_continuous()
-
-
-
-
-
-
