@@ -1,18 +1,14 @@
-library(raster)
-library(viridis)
-library(rgdal)
-library(geobr) # git
-library(tmap)
-library(sf)
-library(tidyverse)
-packages <- list("raster", "viridis", "rgdal", "tmap", "sf", "tidyvere")
-a <- require(hass)
-for(i in packages){
-  if (i == T){
-    install.packages(i, )
-  }
+# check.packages function: install and load multiple R packages.
+# Check to see if packages are installed. Install them if they are not, then load them into the R session.
+check.packages <- function(pkg){
+  new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+  if (length(new.pkg)) 
+    install.packages(new.pkg, dependencies = TRUE)
+  sapply(pkg, require, character.only = TRUE)
 }
 
+packages <- c("raster", "viridis", "rgdal", "tmap", "sf", "tidyverse", "geobr")
+check.packages(packages)
 
 # setwd("/home/wesley/Desktop/IC/Processamento de imagens/")
 # plant <- st_read("ok247/000_SP_Usinas.shp") %>% 
@@ -22,10 +18,10 @@ for(i in packages){
 #   dplyr::mutate(mapa = "E")
 # rm(plant)
 
-c2 <- scan(file = paste("201907141630G16.SP_Bandas_2_3--L1B.pic.C02.txt", sep = ""), sep = ",", quiet=T)
+c2 <- scan(file = paste("data/201907141630G16.SP_Bandas_2_3--L1B.pic.C02.txt", sep = ""), sep = ",", quiet=T)
 c2 <- matrix(c2, byrow= TRUE, ncol = 2110, nrow = 1332)
 
-c3 <- scan(file = paste("201907141630G16.SP_Bandas_2_3--L1B.pic.C03.txt", sep = ""), sep = ",", quiet=T)
+c3 <- scan(file = paste("data/201907141630G16.SP_Bandas_2_3--L1B.pic.C03.txt", sep = ""), sep = ",", quiet=T)
 c3 <- matrix(c3, byrow= TRUE, ncol = 2110, nrow = 1332)
 ndvi <- t(c3-c2)/t(c3+c2)
 
@@ -43,13 +39,15 @@ ndvi_rast <- flip(ndvi_rast, 2)
 
 set.seed(13)
 loc_plant <- read.table("../../canasat/sp_12.txt") %>% 
-  # sample_n(200) %>% 
+  sample_n(200) %>%
   st_as_sf(coords = c(2,1), crs=crs(ndvi_rast, asText=TRUE))
 
 sao_paulo <- read_state("SP", 2016)
 sao_paulo <- st_transform(sao_paulo, crs = crs(ndvi_rast, asText=TRUE))
 
 breaks <- seq(-1, 1, by = 0.00001)
+
+rm(ndvi, c2, c3)
 
 ndvi_map <- tm_shape(ndvi_rast) + tm_raster(midpoint = NA, palette = viridis(length(breaks)), style = "cont", title = "NDVI") +
   tm_shape(sao_paulo) + tm_borders(col = "white") +
@@ -92,14 +90,16 @@ tm_shape(ndvi_rast_raio) + tm_raster(midpoint = NA, palette = viridis(length(bre
 
 # fazer lista de matrizes com recortes ao longo do tempo
 
-setwd("/run/media/wesley/6CD80ADD0368A759/Cepagri/goes_server/ascii")
+setwd("data/")
 files <- str_sub(list.files(), 1, 39)
 patt <- files %>% 
   str_subset("SP_Bandas_2_3--L1B") %>% 
   str_sub(1, 10) %>% 
   unique()
 
-patt <- c(patt[1], patt[2])
+# save.image("~/Dropbox/ic.RData")
+
+# patt <- c(patt[1], patt[2])
 
 rm(valsTempo, ndvi_rast, ndvi_rast_raio, ndvi, locVals_mtr_p, loc_plant_1km)
 
