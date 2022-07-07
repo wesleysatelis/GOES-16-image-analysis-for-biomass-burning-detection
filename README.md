@@ -8,4 +8,4 @@ The main goal is to characterise and quantify areas where pre-harvesting burning
 
 This project was fundend by the Brazilian National Council for Scientific and Technological Development and developed at the Center for Meteorological and Climate Research Applied to Agriculture (CEPAGRI/UNICAMP) and Institute of Mathematics, Statistics and Scientific Computing (IMECC/UNICAMP).
 
-The complete report can be found at [I'm an inline-style link](github.com/wesleysatelis/GOES-16-image-analysis-for-biomass-burning-detection/blob/master/relatorio_final/diffrev.pdf)
+The complete report can be found [here](github.com/wesleysatelis/GOES-16-image-analysis-for-biomass-burning-detection/blob/master/relatorio_final/diffrev.pdf)
